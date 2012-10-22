@@ -61,8 +61,7 @@ Defaults
 ========
 
 You can specify default values, too.  By default, ``pluck`` will throw an
-exception when a "field" does not exist.  To instead fill these places
-with a default value, use this::
+exception when a "field" does not exist::
 
    >>> pluck(objects, 'sex')
    Traceback (most recent call last):
@@ -72,11 +71,14 @@ with a default value, use this::
      File "pluck.py", line 49, in getter
          raise ValueError('Item %r has no attr or key for %r' % (item, key))
      ValueError: Item {'age': 56, 'id': 217, 'name': 'Bob'} has no attr or key for 'sex'
+
+To instead fill these places with a default value, use this::
+
    >>> pluck(objects, 'sex', default='unknown')
    ['female', 'unknown', 'male']
 
-When you specify multiple keys, you need to use the ``defaults`` keyword
-argument instead (note the plurality)::
+When you specify multiple keys, you need to use the ``defaults`` (plural!)
+keyword argument instead::
 
    >>> pluck(objects, 'name', 'sex', defaults={'sex': 'unknown'})
    [('Alice', 'female'), ('Bob', 'unknown'), ('Charlie', 'male')]
