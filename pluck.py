@@ -29,9 +29,6 @@ def pluck_single(iterable, key, default=FAIL):
 
 
 def ipluck_single(iterable, key, default=FAIL):
-    """
-    TODO: DOCUMENT
-    """
     attrgetter = operator.attrgetter(key)
     itemgetter = operator.itemgetter(key)
 
@@ -64,6 +61,7 @@ def ipluck_multiple(iterable, defaults, *keys):
 
 
 def ipluck(iterable, key, *keys, **kwargs):
+    """Iterator version of pluck()."""
     if len(keys) > 0:
         defaults = kwargs.pop('defaults', {})
         return ipluck_multiple(iterable, defaults, key, *keys)
@@ -73,6 +71,36 @@ def ipluck(iterable, key, *keys, **kwargs):
 
 
 def pluck(iterable, *keys, **kwargs):
+    """pluck is the simplest way of plucking "fields" from an iterable of
+    values.  "Fields" are either ``item.field`` or ``item[field]``.  Pluck
+    tries both, in that order.  If nothing is found, and no default value is
+    specified, it throws an exception.
+
+    Examples:
+
+        >>> dates = [
+        ...     datetime(2012, 10, 22, 12, 00),
+        ...     datetime(2012, 10, 22, 15, 14),
+        ...     datetime(2012, 10, 22, 21, 44),
+        ... ]
+        >>> objects = [
+        ...      {'id': 282, 'name': 'Alice', 'age': 30, 'sex': 'female'},
+        ...      {'id': 217, 'name': 'Bob', 'age': 56},
+        ...      {'id': 328, 'name': 'Charlie', 'age': 56, 'sex': 'male'},
+        ... ]
+
+        >>> pluck(dates, 'hour')
+        [12, 15, 21]
+        >>> pluck(objects, 'name')
+        ['Alice', 'Bob', 'Charlie']
+        >>> pluck(objects, 'name', 'age')
+        [('Alice', 30), ('Bob', 56), ('Charlie': 56)]
+        >>> pluck(objects, 'name', 'sex')
+        ValueError: item {'id': 217, 'name': 'Bob', 'age': 56} has no attr or key 'sex'
+        >>> pluck(dates, 'name', 'sex', defaults={'sex': 'unknown'})
+        [('Alice', 'female'), ('Bob', 'unknown'), ('Charlie': 'male')]
+
+    """
     return list(ipluck(iterable, *keys, **kwargs))
 
 
