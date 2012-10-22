@@ -2,10 +2,9 @@ pluck: Quickly pluck "fields" from a list of values
 ===================================================
 
 pluck is the simplest way of plucking "fields" from an iterable of values.
-"Fields" are either `item.field` or `item[field]`.  Pluck tries both, in
-that order.  If nothing is found, and no default value is specified, it
+"Fields" are either ``item.field`` or ``item[field]``.  Pluck tries both,
+in that order.  If nothing is found, and no default value is specified, it
 throws an exception.
-
 
 
 Usage
@@ -38,7 +37,7 @@ A simple example first.  Say you have a list of datetimes::
    >>> pluck(dates, 'hour')
    [12, 15, 21]
 
-It also works on dictionary-like access (`__getitem__`)::
+It also works on dictionary-like access (``__getitem__``)::
 
    >>> objects = [
    ...      {'id': 282, 'name': 'Alice', 'age': 30},
@@ -59,7 +58,7 @@ You can also combine these into a single pluck::
 Defaults
 ========
 
-You can specify default values, too.  By default, `pluck` will throw an
+You can specify default values, too.  By default, ``pluck`` will throw an
 exception when a "field" does not exist.  To instead fill these places
 with a default value, use this::
 
@@ -72,7 +71,7 @@ with a default value, use this::
    >>> pluck(objects, 'name', default='Foo')
    ['Alice', 'Bob', 'Foo', 'Charlie']
 
-When you specify multiple keys, you need to use the `defaults` keyword
+When you specify multiple keys, you need to use the ``defaults`` keyword
 argument instead (note the plurality)::
 
    >>> objects = [
@@ -88,7 +87,7 @@ argument instead (note the plurality)::
 Iterator, rather?
 =================
 
-Use `ipluck` if you'd rather wanna have an iterator.
+Use ``ipluck`` if you'd rather wanna have an iterator.
 
-`pluck` is equivalent to `list(ipluck(...))`.
+``pluck`` is equivalent to ``list(ipluck(...))``.
 
