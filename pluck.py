@@ -1,12 +1,12 @@
 ## -*- coding: utf-8 -*-
-
 """
 pluck
 =====
 
->>> from pluck import pluck
-INSERT EXAMPLE HERE
-
+pluck is the simplest way of plucking "fields" from an iterable of values.
+"Fields" are either ``item.field`` or ``item[field]``.  Pluck tries both,
+in that order.  If nothing is found, and no default value is specified, it
+throws an exception.
 """
 from itertools import imap, izip, tee
 import operator
