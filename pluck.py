@@ -8,7 +8,13 @@ pluck is the simplest way of plucking "fields" from an iterable of values.
 in that order.  If nothing is found, and no default value is specified, it
 throws an exception.
 """
-from itertools import imap, izip, tee
+import sys
+
+PY3 = sys.version_info >= (3, 0)
+if not PY3:
+    from future_builtins import map, zip
+
+from itertools import tee
 import operator
 
 __title__ = 'pluck'
@@ -48,7 +54,7 @@ def ipluck_single(iterable, key, default=FAIL):
 
         raise ValueError('Item %r has no attr or key for %r' % (item, key))
 
-    return imap(getter, iterable)
+    return map(getter, iterable)
 
 
 def ipluck_multiple(iterable, defaults, *keys):
@@ -56,8 +62,8 @@ def ipluck_multiple(iterable, defaults, *keys):
         iters = tee(iterable, len(keys))
     else:
         iters = (iterable,)
-    iters = [ipluck_single(it, key, default=defaults.get(key, FAIL)) for it, key in izip(iters, keys)]
-    return izip(*iters)
+    iters = [ipluck_single(it, key, default=defaults.get(key, FAIL)) for it, key in zip(iters, keys)]
+    return zip(*iters)
 
 
 def ipluck(iterable, key, *keys, **kwargs):
