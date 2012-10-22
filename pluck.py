@@ -8,7 +8,7 @@ pluck
 INSERT EXAMPLE HERE
 
 """
-from itertools import imap, izip
+from itertools import imap, izip, tee
 import operator
 
 __title__ = 'pluck'
@@ -55,7 +55,11 @@ def ipluck_single(iterable, key, default=FAIL):
 
 
 def ipluck_multiple(iterable, defaults, *keys):
-    iters = [ipluck_single(iterable, key, default=defaults.get(key, FAIL)) for key in keys]
+    if len(keys) > 1:
+        iters = tee(iterable, len(keys))
+    else:
+        iters = (iterable,)
+    iters = [ipluck_single(it, key, default=defaults.get(key, FAIL)) for it, key in izip(iters, keys)]
     return izip(*iters)
 
 

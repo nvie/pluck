@@ -51,6 +51,16 @@ class TestPluck(unittest.TestCase):
         assert pluck(l, 'id', 'age', defaults={'age': 100}) == \
                [(282, 30), (217, 56), (328, 56), ('167', 100)]
 
+    def test_works_with_iterables(self):
+        l = iter([
+                {'id': 282, 'name': 'Alice', 'age': 30},
+                {'id': 217, 'name': 'Bob', 'age': 56},
+                {'id': 328, 'name': 'Charlie', 'age': 56},
+                {'id': 167},
+            ])
+        assert pluck(l, 'id', 'name', defaults={'name': 'Mr. X'}) == \
+               [(282, 'Alice'), (217, 'Bob'), (328, 'Charlie'), (167, 'Mr. X')]
+
 
 if __name__ == '__main__':
     unittest.main()
