@@ -18,7 +18,7 @@ from itertools import tee
 import operator
 
 __title__ = 'pluck'
-__version__ = '0.1'
+__version__ = '0.2'
 __author__ = 'Vincent Driessen'
 __license__ = 'BSD'
 __copyright__ = 'Copyright 2012 Vincent Driessen'
