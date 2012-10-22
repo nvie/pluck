@@ -74,3 +74,6 @@ def ipluck(iterable, key, *keys, **kwargs):
 
 def pluck(iterable, *keys, **kwargs):
     return list(ipluck(iterable, *keys, **kwargs))
+
+
+__all__ = ['pluck', 'ipluck']
