@@ -10,13 +10,15 @@ throws an exception.
 Usage
 =====
 
-The package consists of one module consisting of one function::
+The package consists of one module consisting of two functions::
 
-   from pluck import pluck
+   from pluck import pluck, ipluck
+
+``ipluck`` is just the iterable version of ``pluck``.  Use it like this::
 
    pluck(iterable, key)
 
-Or::
+or::
 
    pluck(iterable, *keys)
 
@@ -83,7 +85,10 @@ argument instead (note the plurality)::
 Iterator, rather?
 =================
 
-Use ``ipluck`` if you'd rather wanna have an iterator.
+Use ``ipluck`` if you'd rather wanna have an iterator::
+
+    >>> from pluck import ipluck
+    >>> ipluck(large_stream_of_items, 'name')
+    <itertools.imap object at 0x10c7515d0>
 
 ``pluck`` is equivalent to ``list(ipluck(...))``.
-
